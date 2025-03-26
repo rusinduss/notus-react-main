@@ -46,6 +46,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             onChange={handleChange}
           />
         </div>
+        
         <div className="form-group">
           <label className="form-label" htmlFor="suburb">Suburb:</label>
           <input 
@@ -56,6 +57,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             value={formData.suburb}
             onChange={handleChange}
           />
+        </div>
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="scity">City:</label>
@@ -79,7 +81,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             onChange={handleChange}
           />
         </div>
-      </div>
+     
       <div className="form-box-inner">
         <div className="form-group">
           <label className="form-label" htmlFor="assestmentNo">Assestment No:</label>

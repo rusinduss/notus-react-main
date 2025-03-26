@@ -1,6 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
+
+// eslint-disable-next-line react-hooks/rules-of-hooks
 
 const CustomerDetails = ({ formData, handleChange, customerExists }) => {
+  const [customerDetails, setCustomerDetails] = useState({
+    id: "",
+    type: "personal",
+    idType: "NIC",
+    fullName: "",
+    firstName: "",
+    lastName: "",
+    streetAddress: "",
+    city: "",
+    postalCode: "",
+    telephoneNo: "",
+    mobileNo: "",
+    email: "",
+    language: "",
+  });
  // Function for automatically selecting the radio of idtype
   function handleSelectIdType() {
     var selectValue = document.getElementById("type").value;
@@ -13,7 +31,17 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
       document.getElementById("BusRegNo").checked = false;
     }
   }
-
+   const handlefind=async()=>{
+        try{
+          const response = await axios.get(`http://localhost:8082/api/applicants/${customerDetails.id}`);
+            setCustomerDetails(response.data);
+        }
+        catch(error){
+                console.error("error fetcing data",error);
+        }
+   }
+    
+   
   
 
   return (
@@ -30,10 +58,17 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               name="id"
               className="form-input"
               required
-              value={formData.id}
-              onChange={handleChange}
-              disabled={customerExists}
+              value={customerDetails.id}
+              
+              // disabled={customerExists}
             />
+            </div>
+            <div className="form-group">
+            <button value="find" onClick={handlefind} className="bg-lightBlue-500 mt-6 mb-0 ml-2 text-white font-bold uppercase text-xs px-6 py-3 rounded shadow hover:shadow-md transition duration-150">
+              Find
+            </button>
+            </div>
+            
           </div>
           <div className="form-group">
             <label className="form-label">Personal/Corporate</label>
@@ -45,14 +80,14 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
                 handleSelectIdType();
                 handleChange(e);
               }}
-              value={formData.personalCorporate}
+              value={customerDetails.type}
               disabled={customerExists}
             >
               <option value="PER">Personal</option>
               <option value="COR">Corporate</option>
             </select>
           </div>
-        </div>
+        
 
         <div className="form-row">
           <label className="form-label" htmlFor="IdType">
@@ -66,7 +101,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
                 name="idType"
                 value="NIC"
                 className="radio-input"
-                checked={formData.idType === "NIC"}
+                checked={customerDetails.idType === "NIC"}
                 onChange={handleChange}
                 disabled={customerExists}
               />
@@ -80,7 +115,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
                 name="idType"
                 value="BussinessRegNo"
                 className="radio-input"
-                checked={formData.idType === "BussinessRegNo"}
+                checked={customerDetails.idType === "BussinessRegNo"}
                 onChange={handleChange}
                 disabled={customerExists}
               />
@@ -99,7 +134,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
             className="form-input"
             onInput={(e) => (e.target.value = e.target.value.toUpperCase())}
             required
-            value={formData.fullName}
+            value={customerDetails.fullName}
             onChange={handleChange}
             readOnly={customerExists}
           />
@@ -116,7 +151,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               className="form-input"
               onInput={(e) => (e.target.value = e.target.value.toUpperCase())}
               required
-              value={formData.firstName}
+              value={customerDetails.firstName}
               onChange={handleChange}
               readOnly={customerExists}
             />
@@ -132,7 +167,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               className="form-input"
               onInput={(e) => (e.target.value = e.target.value.toUpperCase())}
               required
-              value={formData.lastName}
+              value={customerDetails.lastName}
               onChange={handleChange}
               readOnly={customerExists}
             />
@@ -149,7 +184,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               id="streetAddress"
               name="streetAddress"
               className="form-input"
-              value={formData.streetAddress}
+              value={customerDetails.streetAddress}
               onChange={handleChange}
               readOnly={customerExists}
             />
@@ -163,11 +198,13 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               id="suburb"
               name="suburb"
               className="form-input"
-              value={formData.suburb}
+              value={customerDetails.suburb}
               onChange={handleChange}
               readOnly={customerExists}
             />
           </div>
+          </div>
+          <div className="form-box-inner">
           <div className="form-group">
             <label className="form-label" htmlFor="city">
               City:
@@ -177,7 +214,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               id="city"
               name="city"
               className="form-input"
-              value={formData.city}
+              value={customerDetails.city}
               onChange={handleChange}
               readOnly={customerExists}
             />
@@ -191,7 +228,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               id="postalCode"
               name="postalCode"
               className="form-input"
-              value={formData.postalCode}
+              value={customerDetails.postalCode}
               onChange={handleChange}
               readOnly={customerExists}
             />
@@ -208,10 +245,10 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               id="telephoneNo"
               name="telephoneNo"
               className="form-input"
-              placeholder="07xxxxxxxx"
-              value={formData.telephoneNo}
+              placeholder="0xxxxxxxx"
+              value={customerDetails.telephoneNo}
               onChange={handleChange}
-              readOnly={customerExists}
+              // readOnly={customerExists}
             />
           </div>
           <div className="form-group">
@@ -227,7 +264,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               pattern="07[0-9]{8}"
               title="Phone number must start with 07 and be 10 digits total"
               required
-              value={formData.mobileNo}
+              value={customerDetails.mobileNo}
               onChange={handleChange}
             />
           </div>
@@ -240,7 +277,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
               id="email"
               name="email"
               className="form-input"
-              value={formData.email}
+              value={customerDetails.email}
               onChange={handleChange}
             />
           </div>
@@ -261,7 +298,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
                 name="language"
                 value="sinhala"
                 className="radio-input"
-                checked={formData.preferredLanguage === "SI"}
+                checked={customerDetails.preferredLanguage === "SI"}
                 onChange={handleChange}
                 disabled={customerExists}
               />
@@ -274,7 +311,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
                 name="language"
                 value="tamil"
                 className="radio-input"
-                checked={formData.language === "tamil"}
+                checked={customerDetails.language === "tamil"}
                 onChange={handleChange}
                 disabled={customerExists}
               />
@@ -287,7 +324,7 @@ const CustomerDetails = ({ formData, handleChange, customerExists }) => {
                 name="language"
                 value="english"
                 className="radio-input"
-                checked={formData.language === "english"}
+                checked={customerDetails.language === "english"}
                 onChange={handleChange}
                 disabled={customerExists}
               />

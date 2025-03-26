@@ -251,8 +251,8 @@ const NewCustomerStepper = () => {
         </div>
 
         <div className="form-container">
-          <div className="flex flex-col items-center min-h-screen bg-gray-100 p-6">
-            <div className="w-full max-w-4xl px-4">
+          <div className="flex flex-col min-h-screen bg-gray-100 p-6">
+            <div className="w-full max-w-6xl mx-auto px-4">
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded p-1">
                 {/* Stepper */}
                 <div className="flex justify-between items-center mb-4 mt-4 relative w-full">
@@ -292,19 +292,19 @@ const NewCustomerStepper = () => {
 
                 
 
-                <div className="ml-0 p-5 bg-blueGray-100">
+                <div className="ml-0 p-0 bg-blueGray-100">
                 <h6 className=" py-0 text-xl text-center font-bold text-blueGray-700">
                     {tabs[activeTab].name}
                   </h6>
-                  <div className="p-5 mr-4 rounded">{tabs[activeTab].content}</div>
+                  <div className="p-2 rounded w-full max-w-5xl">{tabs[activeTab].content}</div>
                 </div>
                 <div className="flex justify-between items-center mb-1">
                  
-                  <div className="flex space-x-4 mr-4">
+                  <div className="flex space-x-4">
                     {activeTab > 0 && (
                       <button
                         onClick={handlePrev}
-                        className="bg-lightBlue-500 text-white font-bold uppercase text-xs px-6 py-3 mr-4 rounded shadow hover:shadow-md transition duration-150"
+                        className="bg-lightBlue-500 text-white font-bold uppercase text-xs px-6 py-3  rounded shadow hover:shadow-md transition duration-150"
                       >
                         Previous
                       </button>
