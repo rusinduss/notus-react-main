@@ -1,7 +1,7 @@
 /* Main layout styles */
 .app-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0274af;
+  background-color: #6680cc;
   min-height: 100vh;
 }
 
@@ -248,21 +248,33 @@
 .form-row {
   display: flex;
   align-items: center;
-  /* margin-bottom: 5px; */
+  margin-bottom: 15px;
+}
+
+.form-label {
+  margin-right: 15px;
+  color: #4a5568;
+  min-width: 80px; 
 }
 
 .radio-group {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin: 5px;
+  gap: 15px;
 }
 
-.radio-label {
-  margin-right: 3px;
-  color: #4a5568;
-  margin-bottom: 10px;
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.radio-input {
+  margin: 0;
+}
+
+.radio-option span {
+  white-space: nowrap; 
 }
 
 /* Next button styling to match image */
@@ -303,4 +315,29 @@
   .form-container .text-xs {
     font-size: 10px;
   }
+}
+
+
+/* update the css for diabled and read only */
+/* Add to your NewCustomerForm.css */
+.customer-exists-badge {
+  background-color: #38a169;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.form-input:disabled,
+.form-select:disabled,
+.radio-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.form-input[readonly] {
+  background-color: #f5f5f5;
+  border-color: #e2e8f0;
 }

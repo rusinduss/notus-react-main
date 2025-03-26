@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./NewCustomerForm.css";
-
+import axios from 'axios';
 // Step Components
 import {CustomerDetails} from "../Forms/StepperComponents/CustomerDetails";
 import {ContactPersonDetails} from "../Forms/StepperComponents/ContactPersonDetails.js";
@@ -10,6 +10,8 @@ import {ConnectionDetails} from "../Forms/StepperComponents/ConnectionDetails";
 const NewCustomerStepper = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [completedTabs, setCompletedTabs] = useState(Array(4).fill(false));
+  const [customerExists, setCustomerExists] = useState(false);
+
 
   // Customer Details state
   const [customerDetails, setCustomerDetails] = useState({
@@ -89,6 +91,39 @@ const NewCustomerStepper = () => {
     return requiredFields.every((field) => formData[field] !== "" && formData[field] !== undefined);
   };
 
+  const fetchCustomerById = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8082/api/applicants/${id}`);
+      if (response.data) {
+        setCustomerExists(true);
+        setCustomerDetails({
+          ...response.data,
+          mobileNo: response.data.mobileNo || "",
+          email: response.data.email || ""
+        });
+      } else {
+        setCustomerExists(false);
+      }
+    } catch (error) {
+      setCustomerExists(false);
+      console.error("Error fetching customer:", error);
+    }
+  };
+
+  // Add this useEffect for auto-search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (customerDetails.id && customerDetails.id.length > 5) {
+        fetchCustomerById(customerDetails.id);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [customerDetails.id]);
+
+
+
+
   // Update completed steps when form changes
   useEffect(() => {
     const requiredCustomerFields = ["id", "fullName", "firstName", "lastName", "mobileNo"];
@@ -146,6 +181,8 @@ const NewCustomerStepper = () => {
         <CustomerDetails
           formData={customerDetails}
           handleChange={handleCustomerDetailsChange}
+          setFormData={setCustomerDetails}
+          customerExists={customerExists}
         />
       ),
     },
@@ -222,17 +259,17 @@ const NewCustomerStepper = () => {
                   {tabs.map((tab, index) => (
                     <div
                       key={index}
-                      className="relative flex-1 flex flex-col items-center"
+                      className="relative flex-1 flex flex-col items-center "
                     >
                       {/* Draw connecting line */}
                       {index > 0 && (
                         <div
-                          className={`absolute top-1/2 left-0 transform -translate-y-1/2 h-3 w-full ${
+                          className={`absolute top-1/2 left-0 transform -translate-y-1/2 h-3 w-full  ${
                             completedTabs[index - 1]
                               ? "bg-emerald-400"
                               : "bg-gray-300"
                           }`}
-                          style={{ zIndex: -1 }}
+                          style={{ zIndex: -1}}
                         ></div>
                       )}
                       {/* Step circle */}
