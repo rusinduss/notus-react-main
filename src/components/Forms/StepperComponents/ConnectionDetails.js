@@ -4,7 +4,7 @@ const ConnectionDetails = ({ formData, handleChange, handleSubmit }) => {
   return (
     <div className="form-box">
       <div className="form-row">
-        <label className="form-label" htmlFor="disturbance"><b>Loads Creating Disturbance:</b></label>&nbsp;&nbsp;
+        <label className="form-label" htmlFor="disturbance"><b>Loads Creating Disturbance:</b></label>
         <div className="radio-group">
           
           <input 
@@ -53,7 +53,7 @@ const ConnectionDetails = ({ formData, handleChange, handleSubmit }) => {
         </div>
       </div>
       <div className="form-box-inner">
-        <label className="form-label" htmlFor="phase"><b>Phase:</b></label>&nbsp;&nbsp;
+        <label className="form-label" htmlFor="phase"><b>Phase:</b></label>&nbsp;
         <div className="radio-group">
          
           <input 
@@ -74,7 +74,7 @@ const ConnectionDetails = ({ formData, handleChange, handleSubmit }) => {
             className="radio-input"
             checked={formData.phase === "3ph"}
             onChange={handleChange}
-          /><label htmlFor="3ph" className="radio-label">3ph</label>
+          /><label htmlFor="3ph" className="radio-label">3ph</label>&nbsp;
         </div>
         
         <label className="form-label" htmlFor="connectionType"><b>Connection Type:</b></label>&nbsp;&nbsp;
@@ -118,20 +118,7 @@ const ConnectionDetails = ({ formData, handleChange, handleSubmit }) => {
             <option value="Corporate">Corporate</option>
           </select>
         </div>
-        <div className="form-group">
-          <label className="form-label">Tariff Code</label>
-          <select 
-            id="tariffCode" 
-            name="tariffCode" 
-            className="form-select"
-            value={formData.tariffCode}
-            onChange={handleChange}
-          >
-            <option value="">Select Code</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-          </select>
-        </div>
+    
         <div className="form-group">
           <label className="form-label">Tariff Category Code</label>
           <select 
@@ -141,8 +128,11 @@ const ConnectionDetails = ({ formData, handleChange, handleSubmit }) => {
             value={formData.tariffCategeory || "DP"}
             onChange={handleChange}
           >
-            <option value="DP">DP</option>
-            <option value="Corporate">Corporate</option>
+            <option value="DP">Domestic purpose</option>
+            <option value="RP">Religious purpose</option>
+            <option value="GP">General purpose</option>
+            <option value="IP">Industrial purpose</option>
+            <option value="AG">Agricultural purpose</option>
           </select>
         </div>
       </div>

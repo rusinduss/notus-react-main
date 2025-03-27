@@ -6,7 +6,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
     <div className="form-box">
       <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label">Select your Area</label>
+          <label className="form-label required">Select your Area</label>
           <select 
             id="area" 
             name="area" 
@@ -19,8 +19,10 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             <option value="area2">area2</option>
           </select>
         </div>
+        </div>
+        <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label">Select nearest Consumer Service Center</label>
+          <label className="form-label required">Select nearest Consumer Service Center</label>
           <select 
             id="csc" 
             name="csc" 
@@ -33,34 +35,34 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             <option value="csc2">csc2</option>
           </select>
         </div>
-      </div>
+        </div>
       <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label" htmlFor="sadress">Street Address:</label>
+          <label className="form-label required" htmlFor="sadress">House/Building No:</label>
           <input 
             type="text" 
-            id="sadress" 
-            name="sadress" 
+            id="shouseNo" 
+            name="shouseNo" 
             className="form-input"
-            value={formData.sadress}
+            value={formData.shouseNo}
             onChange={handleChange}
           />
         </div>
         
         <div className="form-group">
-          <label className="form-label" htmlFor="suburb">Suburb:</label>
+          <label className="form-label required" htmlFor="suburb">Street Name:</label>
           <input 
             type="text" 
-            id="suburb" 
-            name="suburb" 
+            id="saddress" 
+            name="saddress" 
             className="form-input"
-            value={formData.suburb}
+            value={formData.saddress}
             onChange={handleChange}
           />
         </div>
         </div>
         <div className="form-group">
-          <label className="form-label" htmlFor="scity">City:</label>
+          <label className="form-label required" htmlFor="scity">City:</label>
           <input 
             type="text" 
             id="scity" 
@@ -71,7 +73,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
           />
         </div>
         <div className="form-group">
-          <label className="form-label" htmlFor="spostalcode">Postal Code:</label>
+          <label className="form-label required" htmlFor="spostalcode">Postal Code:</label>
           <input 
             type="text" 
             id="spostalcode" 
@@ -95,7 +97,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
           />
         </div>
         <div className="form-group">
-          <label className="form-label" htmlFor="neigbourAcc">Neighbour's Acc Number:</label>
+          <label className="form-label" htmlFor="neigbourAcc">Neighbour's Acc No:</label>
           <input 
             type="text" 
             id="neigbourAcc" 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./NewCustomerForm.css";
+import ceb from "../../assets/img/ceb.png"
 import axios from 'axios';
 // Step Components
 import {CustomerDetails} from "../Forms/StepperComponents/CustomerDetails";
@@ -21,13 +22,14 @@ const NewCustomerStepper = () => {
     fullName: "",
     firstName: "",
     lastName: "",
+    suburb:"",
     streetAddress: "",
     city: "",
     postalCode: "",
     telephoneNo: "",
     mobileNo: "",
     email: "",
-    language: "",
+    prefferedLanguage: "",
   });
 
   // Contact Person Details state
@@ -45,8 +47,8 @@ const NewCustomerStepper = () => {
     province: "",
     area: "",
     csc: "",
-    sadress: "",
-    suburb: "",
+    saddress: "",
+    shouseNo: "",
     scity: "",
     spostalcode: "",
     assestmentNo: "",
@@ -148,9 +150,10 @@ const NewCustomerStepper = () => {
 
     const payload = {
       customerDetails,
-      contactPersonDetails,
       serviceLocationDetails,
       connectionDetails,
+      contactPersonDetails,
+     
     };
 
     try {
@@ -187,15 +190,6 @@ const NewCustomerStepper = () => {
       ),
     },
     {
-      name: "Contact Person Details",
-      content: (
-        <ContactPersonDetails
-          formData={contactPersonDetails}
-          handleChange={handleContactPersonDetailsChange}
-        />
-      ),
-    },
-    {
       name: "Service Location Details",
       content: (
         <ServiceLocationDetails
@@ -214,9 +208,31 @@ const NewCustomerStepper = () => {
         />
       ),
     },
+    {
+      name: "Contact Person Details",
+      content: (
+        <ContactPersonDetails
+          formData={contactPersonDetails}
+          handleChange={handleContactPersonDetailsChange}
+        />
+      ),
+    },
   ];
 
   const handleNext = () => {
+    if(activeTab===0){
+      console.log(customerDetails)
+    if(!customerDetails.fullName||!customerDetails.firstName||!customerDetails.lastName||!customerDetails.streetAddress||!customerDetails.suburb||!customerDetails.city||!customerDetails.postalCode||!customerDetails.mobileNo){
+      alert("please fill the required fields")
+      return;
+    }}
+    else if(activeTab===1){
+      console.log(serviceLocationDetails);
+      if(!serviceLocationDetails.shouseNo||!serviceLocationDetails.saddress||!serviceLocationDetails.scity||!serviceLocationDetails.area||!serviceLocationDetails.csc){
+        alert("please fill the required fieldsss")
+        return;
+      }
+    }
     const currentTab = tabs[activeTab];
 
     // Validate current tab data if needed
@@ -234,6 +250,7 @@ const NewCustomerStepper = () => {
   };
 
   const handlePrev = () => {
+  
     if (activeTab > 0) {
       setActiveTab(activeTab - 1);
     }
@@ -244,9 +261,8 @@ const NewCustomerStepper = () => {
       <div className="main-content">
         <div className="dashboard-header">
           <h1>New Connection Application Form</h1>
-          <div className="search-container">
-            <input type="text" placeholder="Search here..." className="search-input" />
-            <div className="user-avatar"></div>
+          <div className="ceb-logo">
+            <img src={ceb} alt="ceb-logo"></img>
           </div>
         </div>
 
@@ -300,7 +316,7 @@ const NewCustomerStepper = () => {
                 </div>
                 <div className="flex justify-between items-center mb-1">
                  
-                  <div className="flex space-x-4">
+                  <div className="form-row-button">
                     {activeTab > 0 && (
                       <button
                         onClick={handlePrev}
