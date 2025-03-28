@@ -4,7 +4,7 @@ import axios from 'axios';
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
 const CustomerDetails = ({ formData, setFormData, handleChange}) => {
-  const[id,setId]=useState("");
+  // const[id,setId]=useState("");
   const [customerExists, setCustomerExists] = useState(false);
   // const [customerDetails, setCustomerDetails] = useState({
   //   id: "",

@@ -301,9 +301,63 @@
   transition: background-color 0.2s;
 }
 
-.next-button:hover {
-  background-color: #0088cc;
+
+/* Style for the checkbox container */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+  margin: 10px;
 }
+
+/* Style the actual checkbox input */
+.checkbox-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Style when checkbox is checked */
+.checkbox-input:checked {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+/* Create a checkmark for when the checkbox is checked */
+.checkbox-input:checked::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Hover effect for the checkbox */
+.checkbox-input:hover {
+  border-color: #45a049;
+}
+
+/* Style for the label text next to checkbox */
+.checkbox-label span {
+  font-size: 16px;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -314,6 +368,17 @@
   
   .form-container .flex.justify-between {
     padding: 10px;
+  }
+  .radio-input{
+    margin:0px;
+    margin-bottom: 10px;
+  }
+  .radio-label{
+    margin: 0px;
+    padding: 0px;
+  }
+  .radio-group{
+    margin: 0px;
   }
   
   .form-container .w-10 {

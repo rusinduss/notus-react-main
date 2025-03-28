@@ -220,19 +220,19 @@ const NewCustomerStepper = () => {
   ];
 
   const handleNext = () => {
-    if(activeTab===0){
-      console.log(customerDetails)
-    if(!customerDetails.fullName||!customerDetails.firstName||!customerDetails.lastName||!customerDetails.streetAddress||!customerDetails.suburb||!customerDetails.city||!customerDetails.postalCode||!customerDetails.mobileNo){
-      alert("please fill the required fields")
-      return;
-    }}
-    else if(activeTab===1){
-      console.log(serviceLocationDetails);
-      if(!serviceLocationDetails.shouseNo||!serviceLocationDetails.saddress||!serviceLocationDetails.scity||!serviceLocationDetails.area||!serviceLocationDetails.csc){
-        alert("please fill the required fieldsss")
-        return;
-      }
-    }
+    // if(activeTab===0){
+    //   console.log(customerDetails)
+    // if(!customerDetails.fullName||!customerDetails.firstName||!customerDetails.lastName||!customerDetails.streetAddress||!customerDetails.suburb||!customerDetails.city||!customerDetails.postalCode||!customerDetails.mobileNo){
+    //   alert("please fill the required fields")
+    //   return;
+    // }}
+    // else if(activeTab===1){
+    //   console.log(serviceLocationDetails);
+    //   if(!serviceLocationDetails.shouseNo||!serviceLocationDetails.saddress||!serviceLocationDetails.scity||!serviceLocationDetails.area||!serviceLocationDetails.csc){
+    //     alert("please fill the required fieldsss")
+    //     return;
+    //   }
+    // }
     const currentTab = tabs[activeTab];
 
     // Validate current tab data if needed
@@ -312,7 +312,7 @@ const NewCustomerStepper = () => {
                 <h6 className=" py-0 text-xl text-center font-bold text-blueGray-700">
                     {tabs[activeTab].name}
                   </h6>
-                  <div className="p-2 rounded w-full max-w-5xl">{tabs[activeTab].content}</div>
+                  <div className="p-2 rounded w-full max-w-5xl">{activeTab!==3?(tabs[activeTab].content):(<ContactPersonDetails formData={contactPersonDetails} customerData={customerDetails} setFormData={setContactPersonDetails}></ContactPersonDetails>)}</div>
                 </div>
                 <div className="flex justify-between items-center mb-1">
                  
