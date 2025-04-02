@@ -5,12 +5,12 @@ const ContactPersonDetails = ({ formData, setFormData, handleChange, customerDat
 
   // Create state to manage manually entered data
   const [manualData, setManualData] = useState({
-    pid: formData.pid,
-    pname: formData.pname,
-    paddress: formData.paddress,
-    ptelephoneNo: formData.ptelephoneNo,
-    pmobileNo: formData.pmobileNo,
-    pemail: formData.pemail,
+    contactidNo: formData.contactidNo||"",
+    contactName: formData.contactName||"",
+    contactAddress: formData.contactAddress||"",
+    contactTelephone: formData.contactTelephone||"",
+    contactMobile: formData.contactMobile||"",
+    contactEmail: formData.contactEmail||"",
   });
 
   // Handles the checkbox selection to copy customer data
@@ -22,40 +22,40 @@ const ContactPersonDetails = ({ formData, setFormData, handleChange, customerDat
         // When checkbox is selected, copy customer details to form data
         setFormData({
           ...formData,
-          pid: customerData.id,
-          pname: customerData.fullName,
-          paddress: customerData.streetAddress,
-          ptelephoneNo: customerData.telephoneNo,
-          pmobileNo: customerData.mobileNo,
-          pemail: customerData.email,
+          contactidNo: customerData.idNo,
+          contactName: customerData.fullName,
+          contactAddress: customerData.streetAddress,
+          contactTelephone:customerData.telephoneNo,
+          contactMobile:  customerData.mobileNo,
+          contactEmail: customerData.email,
         });
         // Update manual data state with customer data
         setManualData({
-          pid: customerData.id,
-          pname: customerData.fullName,
-          paddress: customerData.streetAddress,
-          ptelephoneNo: customerData.telephoneNo,
-          pmobileNo: customerData.mobileNo,
-          pemail: customerData.email,
+          contactidNo: customerData.idNo,
+          contactName: customerData.fullName,
+          contactAddress: customerData.streetAddress,
+          contactTelephone: customerData.telephoneNo,
+          contactMobile: customerData.mobileNo,
+          contactEmail: customerData.email,
         });
       } else {
         // When checkbox is unselected, clear both form data and manual data
         setFormData({
           ...formData,
-          pid: '',
-          pname: '',
-          paddress: '',
-          ptelephoneNo: '',
-          pmobileNo: '',
-          pemail: '',
+          contactidNo: '',
+          contactName: '',
+          contactAddress: '',
+          contactTelephone: '',
+          contactMobile: '',
+          contactEmail: '',
         });
         setManualData({
-          pid: '',
-          pname: '',
-          paddress: '',
-          ptelephoneNo: '',
-          pmobileNo: '',
-          pemail: '',
+          contactidNo: '',
+          contactName: '',
+          contactAddress: '',
+          contactTelephone: '',
+          contactMobile: '',
+          contactEmail: '',
         });
       }
 
@@ -78,62 +78,62 @@ const ContactPersonDetails = ({ formData, setFormData, handleChange, customerDat
       </div>
       <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label" htmlFor="pid">ID:</label>
+          <label className="form-label" htmlFor="contactidNo">ID:</label>
           <input
             type="text"
-            id="pid"
-            name="pid"
+            id="contactidNo"
+            name="contactidNo"
             className="form-input"
-            value={manualData.pid}
-            onChange={(e) => setManualData({ ...manualData, pid: e.target.value })}
+            value={manualData.contactidNo}
+            onChange={(e) => setManualData({ ...manualData, contactidNo: e.target.value })}
           />
         </div>
         <div className="form-group">
-          <label className="form-label" htmlFor="pname">Contact Name:</label>
+          <label className="form-label" htmlFor="contactName">Contact Name:</label>
           <input
             type="text"
-            id="pname"
-            name="pname"
+            id="contactName"
+            name="contactName"
             className="form-input"
-            value={manualData.pname}
-            onChange={(e) => setManualData({ ...manualData, pname: e.target.value })}
+            value={manualData.contactName}
+            onChange={(e) => setManualData({ ...manualData, contactName: e.target.value })}
           />
         </div>
       </div>
       <div className="form-row">
         <div className="form-group">
-          <label className="form-label" htmlFor="paddress">Contact Address:</label>
+          <label className="form-label" htmlFor="contactAddress">Contact Address:</label>
           <input
             type="text"
-            id="paddress"
-            name="paddress"
+            id="contactAddress"
+            name="contactAddress"
             className="form-input"
-            value={manualData.paddress}
-            onChange={(e) => setManualData({ ...manualData, paddress: e.target.value })}
+            value={manualData.contactAddress}
+            onChange={(e) => setManualData({ ...manualData, contactAddress: e.target.value })}
           />
         </div>
       </div>
       <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label" htmlFor="ptelephoneNo">Telephone No:</label>
+          <label className="form-label" htmlFor="contactTelephone">Telephone No:</label>
           <input
             type="tel"
-            id="ptelephoneNo"
-            name="ptelephoneNo"
+            id="contactTelephone"
+            name="contactTelephone"
             className="form-input"
-            value={manualData.ptelephoneNo}
-            onChange={(e) => setManualData({ ...manualData, ptelephoneNo: e.target.value })}
+            value={manualData.contactTelephone}
+            onChange={(e) => setManualData({ ...manualData, contactTelephone: e.target.value })}
           />
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="pmobileNo">Mobile no:</label>
           <input
             type="tel"
-            id="pmobileNo"
-            name="pmobileNo"
+            id="contactMobile"
+            name="contactMobile"
             className="form-input"
-            value={manualData.pmobileNo}
-            onChange={(e) => setManualData({ ...manualData, pmobileNo: e.target.value })}
+            value={manualData.contactMobile}
+            onChange={(e) => setManualData({ ...manualData, contactMobile: e.target.value })}
           />
         </div>
       </div>
@@ -141,11 +141,11 @@ const ContactPersonDetails = ({ formData, setFormData, handleChange, customerDat
         <label className="form-label" htmlFor="pemail">Email:</label>
         <input
           type="email"
-          id="pemail"
-          name="pemail"
+          id="contactEmail"
+          name="contactEmail"
           className="form-input"
-          value={manualData.pemail}
-          onChange={(e) => setManualData({ ...manualData, pemail: e.target.value })}
+          value={manualData.contactEmail}
+          onChange={(e) => setManualData({ ...manualData, contactEmail: e.target.value })}
         />
       </div>
     </div>

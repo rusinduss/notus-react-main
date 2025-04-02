@@ -16,9 +16,9 @@ const NewCustomerStepper = () => {
 
   // Customer Details state
   const [customerDetails, setCustomerDetails] = useState({
-    id: "",
-    type: "personal",
-    idType: "NIC",
+    idNo: "",
+    personalCorporate: "",
+    idType: "",
     fullName: "",
     firstName: "",
     lastName: "",
@@ -29,30 +29,28 @@ const NewCustomerStepper = () => {
     telephoneNo: "",
     mobileNo: "",
     email: "",
-    prefferedLanguage: "",
+    preferredLanguage: "",
   });
 
   // Contact Person Details state
   const [contactPersonDetails, setContactPersonDetails] = useState({
-    pid: "",
-    pname: "",
-    paddress: "",
-    ptelephoneNo: "",
-    pmobileNo: "",
-    pemail: "",
+    contactidNo: "",
+    contactName: "",
+    contactAddress: "",
+    contactTelephone: "",
+    contactMobile: "",
+    contactEmail: "",
   });
 
   // Service Location Details state
   const [serviceLocationDetails, setServiceLocationDetails] = useState({
-    province: "",
-    area: "",
-    csc: "",
-    saddress: "",
-    shouseNo: "",
-    scity: "",
-    spostalcode: "",
+    deptId: "",
+    serviceStreetAddress: "",
+    serviceSuburb: "",
+    serviceCity: "",
+    servicePostalCode: "",
     assestmentNo: "",
-    neigbourAcc: "",
+    neigbourAccNo: "",
     ownership: "",
   });
 
@@ -60,9 +58,8 @@ const NewCustomerStepper = () => {
   const [connectionDetails, setConnectionDetails] = useState({
     phase: "",
     connectionType: "",
-    customerCat: "",
-    tariffCode: "",
-    tariffCategeory: "",
+    customerCategory: "",
+    tariffCatCode: "",
     disturbance: "",
   });
 
@@ -92,7 +89,7 @@ const NewCustomerStepper = () => {
     if (!requiredFields || requiredFields.length === 0) return true;
     return requiredFields.every((field) => formData[field] !== "" && formData[field] !== undefined);
   };
-
+  const wiringLandDetailDto = { ...serviceLocationDetails, ...connectionDetails };
   const fetchCustomerById = async (id) => {
     try {
       const response = await axios.get(`http://localhost:8082/api/applicants/${id}`);
@@ -143,22 +140,21 @@ const NewCustomerStepper = () => {
 
   const handleSubmit = async () => {
     // Basic validation for required fields
-    if (!customerDetails.id || !customerDetails.fullName) {
-      alert("Please fill in all required fields.");
-      return;
-    }
+    // if (!customerDetails.id || !customerDetails.fullName) {
+    //   alert("Please fill in all required fields.");
+    //   return;
+    // }
 
     const payload = {
       customerDetails,
-      serviceLocationDetails,
-      connectionDetails,
+      wiringLandDetailDto,
       contactPersonDetails,
      
     };
 
     try {
       // Replace with your actual API endpoint
-      const response = await fetch("http://localhost:8081/api/newconnection", {
+      const response = await fetch("http://localhost:8082/api/applications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -278,7 +274,7 @@ const NewCustomerStepper = () => {
                       className="relative flex-1 flex flex-col items-center "
                     >
                       {/* Draw connecting line */}
-                      {index > 0 && (
+                      {/* {index > 0 && (
                         <div
                           className={`absolute top-1/2 left-0 transform -translate-y-1/2 h-3 w-full  ${
                             completedTabs[index - 1]
@@ -287,12 +283,12 @@ const NewCustomerStepper = () => {
                           }`}
                           style={{ zIndex: -1}}
                         ></div>
-                      )}
+                      )} */}
                       {/* Step circle */}
                       <div
                         className={`relative z-10 w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
                           completedTabs[index]
-                            ? "bg-emerald-400 text-white border-blue-600"
+                            ? "bg-white text-white border-blue-600"
                             : index === activeTab
                             ? "bg-red-400 text-white border-orange-600"
                             : "border-gray-400"

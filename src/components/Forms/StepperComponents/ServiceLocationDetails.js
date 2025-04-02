@@ -1,140 +1,240 @@
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const ServiceLocationDetails = ({ formData, handleChange }) => {
+  const [areas, setAreas] = useState([]);
+  const [loadingAreas, setLoadingAreas] = useState(false);
+  const [error, setError] = useState(null);
+  const [cscs, setCscs] = useState([]);
+  const [loadingCscs, setLoadingCscs] = useState(false);
+
+  // Fetch areas on component mount
+  useEffect(() => {
+    const fetchAreas = async () => {
+      try {
+        setLoadingAreas(true);
+        const response = await fetch("http://localhost:8082/api/cscNo/areas");
+        if (!response.ok) {
+          throw new Error("Failed to fetch areas");
+        }
+        const data = await response.json();
+        setAreas(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoadingAreas(false);
+      }
+    };
+
+    fetchAreas();
+  }, []);
+  useEffect(() => {
+    const fetchCscs = async () => {
+      if (!formData.area) {
+        setCscs([]);
+        return;
+      }
+
+      try {
+        setLoadingCscs(true);
+        // Find the selected area to get its deptId
+        const selectedArea = areas.find(area => area.deptArea === formData.area);
+        if (!selectedArea) return;
+
+        const response = await fetch(
+          `http://localhost:8082/api/cscNo/depots?deptId=${selectedArea.deptId}` 
+           );
+        if (!response.ok) {
+          throw new Error("Failed to fetch CSCs");
+        }
+        const data = await response.json();
+        console.log("CSC Data:", data); 
+        setCscs(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoadingCscs(false);
+      }
+    };
+
+    fetchCscs();
+  }, [formData.area, areas]);
+
+
   return (
     <div className="form-box">
+      {error && <div className="error-message">{error}</div>}
+
       <div className="form-box-inner">
         <div className="form-group">
           <label className="form-label required">Select your Area</label>
-          <select 
-            id="area" 
-            name="area" 
+          <select
+            id="area"
+            name="area"
             className="form-select"
             value={formData.area}
             onChange={handleChange}
+            disabled={loadingAreas}
           >
             <option value="">Select Area</option>
-            <option value="area1">area1</option>
-            <option value="area2">area2</option>
+            {areas.map((area) => (
+              <option key={area.deptId} value={area.deptArea}>
+                {area.deptArea}
+              </option>
+            ))}
           </select>
+          {loadingAreas && <div>Loading areas...</div>}
         </div>
-        </div>
-        <div className="form-box-inner">
+      </div>
+
+      <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label required">Select nearest Consumer Service Center</label>
-          <select 
-            id="csc" 
-            name="csc" 
+          <label className="form-label required">
+            Select nearest Consumer Service Center
+          </label>
+          <select
+            id="csc"
+            name="deptId"
             className="form-select"
-            value={formData.csc}
+            value={formData.deptId || ""}
             onChange={handleChange}
+            disabled={loadingCscs || !formData.area}
           >
             <option value="">Select CSC</option>
-            <option value="csc1">csc1</option>
-            <option value="csc2">csc2</option>
+            {cscs.map((csc) => (
+              <option key={csc.deptId} value={csc.deptId}>
+                {csc.deptFullName}
+              </option>
+            ))}
           </select>
+          {loadingCscs && <div>Loading CSCs...</div>}
         </div>
-        </div>
+      </div>
+
+      {/* Address details inputs */}
       <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label required" htmlFor="sadress">House/Building No:</label>
-          <input 
-            type="text" 
-            id="shouseNo" 
-            name="shouseNo" 
+          <label className="form-label required" htmlFor="shouseNo">
+            House/Building No:
+          </label>
+          <input
+            type="text"
+            id="serviceSuburb"
+            name="serviceSuburb"
             className="form-input"
-            value={formData.shouseNo}
+            value={formData.serviceSuburb}
             onChange={handleChange}
           />
         </div>
-        
+
         <div className="form-group">
-          <label className="form-label required" htmlFor="suburb">Street Name:</label>
-          <input 
-            type="text" 
-            id="saddress" 
-            name="saddress" 
+          <label className="form-label required" htmlFor="saddress">
+            Street Name:
+          </label>
+          <input
+            type="text"
+            id="serviceStreetAddress"
+            name="serviceStreetAddress"
             className="form-input"
-            value={formData.saddress}
+            value={formData.serviceStreetAddress}
             onChange={handleChange}
           />
         </div>
-        </div>
-        <div className="form-group">
-          <label className="form-label required" htmlFor="scity">City:</label>
-          <input 
-            type="text" 
-            id="scity" 
-            name="scity" 
-            className="form-input"
-            value={formData.scity}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label className="form-label required" htmlFor="spostalcode">Postal Code:</label>
-          <input 
-            type="text" 
-            id="spostalcode" 
-            name="spostalcode" 
-            className="form-input"
-            value={formData.spostalcode}
-            onChange={handleChange}
-          />
-        </div>
-     
+      </div>
+
+      {/* City and Postal Code inputs */}
+      <div className="form-group">
+        <label className="form-label required" htmlFor="scity">
+          City:
+        </label>
+        <input
+          type="text"
+          id="serviceCity"
+          name="serviceCity"
+          className="form-input"
+          value={formData.serviceCity}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label className="form-label required" htmlFor="spostalcode">
+          Postal Code:
+        </label>
+        <input
+          type="text"
+          id="servicePostalCode"
+          name="servicePostalCode"
+          className="form-input"
+          value={formData.servicePostalCode}
+          onChange={handleChange}
+        />
+      </div>
+
+      {/* Additional optional details */}
       <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label" htmlFor="assestmentNo">Assestment No:</label>
-          <input 
-            type="text" 
-            id="assestmentNo" 
-            name="assestmentNo" 
+          <label className="form-label" htmlFor="assestmentNo">
+            Assessment No:
+          </label>
+          <input
+            type="text"
+            id="assestmentNo"
+            name="assestmentNo"
             className="form-input"
             value={formData.assestmentNo}
             onChange={handleChange}
           />
         </div>
         <div className="form-group">
-          <label className="form-label" htmlFor="neigbourAcc">Neighbour's Acc No:</label>
-          <input 
-            type="text" 
-            id="neigbourAcc" 
-            name="neigbourAcc" 
+          <label className="form-label" htmlFor="neigbourAcc">
+            Neighbour's Acc No:
+          </label>
+          <input
+            type="text"
+            id="neigbourAccNo"
+            name="neigbourAccNo"
             className="form-input"
-            value={formData.neigbourAcc}
+            value={formData.neigbourAccNo}
             onChange={handleChange}
           />
         </div>
       </div>
+
+      {/* Ownership radio buttons */}
       <div className="form-row">
-        <label className="form-label" htmlFor="ownership">Ownership:</label>&nbsp;&nbsp;
+        <label className="form-label" htmlFor="ownership">
+          Ownership:
+        </label>
+        &nbsp;&nbsp;
         <div className="radio-group">
-          
-          <input 
-            type="radio" 
-            id="Occupy" 
-            name="ownership" 
-            value="Occupy" 
+          <input
+            type="radio"
+            id="Occupy"
+            name="ownership"
+            value="Occupy"
             className="radio-input"
             checked={formData.ownership === "Occupy"}
             onChange={handleChange}
-          /><label htmlFor="Occupy" className="radio-label">Occupy</label>&nbsp;
+          />
+          <label htmlFor="Occupy" className="radio-label">
+            Occupy
+          </label>
           &nbsp;
-          
-          <input 
-            type="radio" 
-            id="Rent" 
-            name="ownership" 
-            value="Rent" 
+          <input
+            type="radio"
+            id="Rent"
+            name="ownership"
+            value="Rent"
             className="radio-input"
             checked={formData.ownership === "Rent"}
             onChange={handleChange}
-          /><label htmlFor="Rent" className="radio-label">Rent</label>
+          />
+          <label htmlFor="Rent" className="radio-label">
+            Rent
+          </label>
         </div>
       </div>
     </div>
   );
 };
-export{ServiceLocationDetails};
+
+export { ServiceLocationDetails };

@@ -4,29 +4,15 @@ import axios from 'axios';
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
 const CustomerDetails = ({ formData, setFormData, handleChange}) => {
-  // const[id,setId]=useState("");
+  
   const [customerExists, setCustomerExists] = useState(false);
-  // const [customerDetails, setCustomerDetails] = useState({
-  //   id: "",
-  //   type: "personal",
-  //   idType: "NIC",
-  //   fullName: "",
-  //   firstName: "",
-  //   lastName: "",
-  //   streetAddress: "",
-  //   city: "",
-  //   postalCode: "",
-  //   telephoneNo: "",
-  //   mobileNo: "",
-  //   email: "",
-  //   language: "",
-  // });
+ 
  // Function for automatically selecting the radio of idtype
   const handleSelectIdType=(e)=> {
     const selectValue = e.target.value;
     setFormData((prevdetails)=>({
       ...prevdetails,
-      type:selectValue,
+      personalCorporate:selectValue,
       idType: selectValue==="PER" ?"NIC" :"BusRegNo",
     }));
     if (selectValue === "PER") {
@@ -38,14 +24,25 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
       document.getElementById("BusRegNo").checked = false;
     }
   }
+
    const handlefind=async()=>{
         try{
-          const response = await axios.get(`http://localhost:8082/api/applicants/${formData.id}`);
+          const response = await axios.get(`http://localhost:8082/api/applicants/${formData.idNo}`);
             if(response.data){
               setCustomerExists(true);
-              setFormData((prev)=>({
+              setFormData((prev) => ({
                 ...prev,
-                ...response.data,
+                idNo: prev.idNo||response.data.idNo,  // Ensure ID is always retained
+                personalCorporate:response.data.personalCorporate || prev.personalCorporate,
+                fullName: response.data.fullName || prev.fullName,
+                firstName: response.data.firstName || prev.firstName,
+                lastName: response.data.lastName || prev.lastName,
+                streetAddress: response.data.streetAddress || prev.streetAddress,
+                city: response.data.city || prev.city,
+                postalCode: response.data.postalCode || prev.postalCode,
+                telephoneNo: response.data.telephoneNo || prev.telephoneNo,
+                mobileNo: response.data.mobileNo || prev.mobileNo,
+                email: response.data.email || prev.email,
               }));
             }
             else{
@@ -75,7 +72,7 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
               name="personalCorporate"
               className="form-select"
               onChange={handleSelectIdType }
-              // value={customerDetails.type}
+              value={formData.personalCorporate}
               disabled={customerExists}
             >
               <option value="PER">Personal</option>
@@ -125,11 +122,11 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
             </label>
             <input
               type="text"
-              id="id"
-              name="id"
+              id="idNo"
+              name="idNo"
               className="form-input"
               required
-              value={formData.id}
+              value={formData.idNo}
               onChange={handleChange}
             />
              </div>
@@ -237,7 +234,7 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
             />
           </div>
           <div className="form-group">
-            <label className="form-label required" htmlFor="postalCode">
+            <label className="form-label" htmlFor="postalCode">
               Postal Code:
             </label>
             <input
@@ -247,7 +244,7 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
               className="form-input"
               value={formData.postalCode}
               onChange={handleChange}
-              readOnly={customerExists}
+              // readOnly={customerExists}
             />
           </div>
         </div>
@@ -312,12 +309,12 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
             <label className="radio-option">
               <input
                 type="radio"
-                name="language"
+                name="preferredLanguage"
                 value="SI"
                 className="radio-input"
                 checked={formData.preferredLanguage === "SI"}
                 onChange={(e)=> setFormData((prev)=>({...prev,preferredLanguage: e.target.value}))}
-                disabled={customerExists}
+                // disabled={customerExists}
               />
               <span>Sinhala</span>
             </label>
@@ -325,12 +322,12 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
             <label className="radio-option">
               <input
                 type="radio"
-                name="language"
+                name="preferredLanguage"
                 value="tamil"
                 className="radio-input"
                 checked={formData.preferredLanguage === "tamil"}
                 onChange={(e)=> setFormData((prev)=>({...prev,preferredLanguage: e.target.value}))}
-                disabled={customerExists}
+                // disabled={customerExists}
               />
               <span>Tamil</span>
             </label>
@@ -338,12 +335,12 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
             <label className="radio-option">
               <input
                 type="radio"
-                name="language"
+                name="preferredLanguage"
                 value="english"
                 className="radio-input"
                 checked={formData.preferredLanguage === "english"}
                 onChange={(e)=> setFormData((prev)=>({...prev,preferredLanguage: e.target.value}))}
-                disabled={customerExists}
+                // disabled={customerExists}
               />
               <span>English</span>
             </label>

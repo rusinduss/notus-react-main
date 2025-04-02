@@ -107,25 +107,27 @@ const ConnectionDetails = ({ formData, handleChange, handleSubmit }) => {
         <div className="form-group">
           <label className="form-label">Customer Category</label>
           <select 
-            id="customerCat" 
-            name="customerCat" 
+            id="customerCategory" 
+            name="customerCategory" 
             className="form-select"
-            value={formData.customerCat}
+            value={formData.customerCategory}
             onChange={handleChange}
           >
-            <option value="">Select Category</option>
-            <option value="Personal">Personal</option>
-            <option value="Corporate">Corporate</option>
+            
+            <option value="PRIV">Private</option>
+            <option value="GOVE">Government</option>
+            <option value="SEGO">Semi Government</option>
+            <option value="RELI">Religious</option>
           </select>
         </div>
     
         <div className="form-group">
           <label className="form-label">Tariff Category Code</label>
           <select 
-            id="tariffCategeory" 
-            name="tariffCategeory" 
+            id="tariffCatCode" 
+            name="tariffCatCode" 
             className="form-select"
-            value={formData.tariffCategeory || "DP"}
+            value={formData.tariffCatCode|| "DP"}
             onChange={handleChange}
           >
             <option value="DP">Domestic purpose</option>
