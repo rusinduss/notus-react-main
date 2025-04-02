@@ -50,7 +50,7 @@ const NewCustomerStepper = () => {
     serviceCity: "",
     servicePostalCode: "",
     assestmentNo: "",
-    neigbourAccNo: "",
+    neigboursAccNo: "",
     ownership: "",
   });
 
@@ -60,7 +60,11 @@ const NewCustomerStepper = () => {
     connectionType: "",
     customerCategory: "",
     tariffCatCode: "",
-    disturbance: "",
+    metalCrusher: "",
+    sawMills:"",
+    weldingPlant:"",
+    tariffCode:"",
+    customerType:""
   });
 
   // Generic handlers for form state updates
@@ -308,7 +312,23 @@ const NewCustomerStepper = () => {
                 <h6 className=" py-0 text-xl text-center font-bold text-blueGray-700">
                     {tabs[activeTab].name}
                   </h6>
-                  <div className="p-2 rounded w-full max-w-5xl">{activeTab!==3?(tabs[activeTab].content):(<ContactPersonDetails formData={contactPersonDetails} customerData={customerDetails} setFormData={setContactPersonDetails}></ContactPersonDetails>)}</div>
+                  <div className="p-2 rounded w-full max-w-5xl">
+  {activeTab === 3 ? (
+    <ContactPersonDetails 
+      formData={contactPersonDetails} 
+      customerData={customerDetails} 
+      setFormData={setContactPersonDetails} 
+    />
+  ) : activeTab === 2 ? (
+    <ConnectionDetails 
+      formData={connectionDetails} 
+      // customerData={customerDetails} 
+      setFormData={setConnectionDetails} 
+    />
+  ) : (
+    tabs[activeTab].content
+  )}
+</div>
                 </div>
                 <div className="flex justify-between items-center mb-1">
                  

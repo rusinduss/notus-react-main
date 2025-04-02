@@ -190,10 +190,10 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
           </label>
           <input
             type="text"
-            id="neigbourAccNo"
-            name="neigbourAccNo"
+            id="neigboursAccNo"
+            name="neigboursAccNo"
             className="form-input"
-            value={formData.neigbourAccNo}
+            value={formData.neigboursAccNo}
             onChange={handleChange}
           />
         </div>

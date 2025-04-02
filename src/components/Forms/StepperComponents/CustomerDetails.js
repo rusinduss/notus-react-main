@@ -33,6 +33,7 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
               setFormData((prev) => ({
                 ...prev,
                 idNo: prev.idNo||response.data.idNo,  // Ensure ID is always retained
+                idType:prev.idType||response.data.idType,
                 personalCorporate:response.data.personalCorporate || prev.personalCorporate,
                 fullName: response.data.fullName || prev.fullName,
                 firstName: response.data.firstName || prev.firstName,
