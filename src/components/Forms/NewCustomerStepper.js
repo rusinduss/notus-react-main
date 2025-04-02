@@ -16,6 +16,7 @@ const NewCustomerStepper = () => {
 
   // Customer Details state
   const [customerDetails, setCustomerDetails] = useState({
+    deptId:"",
     idNo: "",
     personalCorporate: "",
     idType: "",
@@ -104,6 +105,7 @@ useEffect(() => {
     return requiredFields.every((field) => formData[field] !== "" && formData[field] !== undefined);
   };
   const wiringLandDetailDto = { ...serviceLocationDetails, ...connectionDetails };
+  const applicationDto={...customerDetails};
   const fetchCustomerById = async (id) => {
     try {
       const response = await axios.get(`http://localhost:8082/api/applicants/${id}`);
@@ -160,14 +162,16 @@ useEffect(() => {
     // }
 
     const payload = {
-      customerDetails,
+      applicationDto,
       wiringLandDetailDto,
       contactPersonDetails,
      
     };
 
     try {
-      // Replace with your actual API endpoint
+      console.log("Payload being sent:", JSON.stringify(payload, null, 2));
+
+    
       const response = await fetch("http://localhost:8082/api/applications", {
         method: "POST",
         headers: {
@@ -175,17 +179,21 @@ useEffect(() => {
         },
         body: JSON.stringify(payload),
       });
-
+    
+      const responseData = await response.json().catch(() => null); // Handle cases where response is not JSON
+    
       if (response.ok) {
+        console.log("Success Response:", responseData);
         alert("Application submitted successfully!");
       } else {
-        alert("Failed to submit application");
+        console.error("Failed Response:", responseData);
+        alert(`Failed to submit application: ${responseData?.message || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting application");
+      alert("Error submitting application. Check the console for details.");
     }
-  };
+  }    
 
   const tabs = [
     {
