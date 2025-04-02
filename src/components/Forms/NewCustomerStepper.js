@@ -16,7 +16,7 @@ const NewCustomerStepper = () => {
 
   // Customer Details state
   const [customerDetails, setCustomerDetails] = useState({
-    deptId:"",
+    // deptId:"",
     idNo: "",
     personalCorporate: "",
     idType: "",
@@ -78,6 +78,13 @@ useEffect(() => {
   }));
 }, [serviceLocationDetails.deptId]);
 
+// useEffect(() => {
+//   setCustomerDetails((prevDetails) => ({
+//     ...prevDetails,
+//     deptId: serviceLocationDetails.deptId, // Update deptId dynamically
+//   }));
+// }, [serviceLocationDetails.deptId]);
+
   // Generic handlers for form state updates
   const handleCustomerDetailsChange = (e) => {
     const { name, value } = e.target;
@@ -105,7 +112,9 @@ useEffect(() => {
     return requiredFields.every((field) => formData[field] !== "" && formData[field] !== undefined);
   };
   const wiringLandDetailDto = { ...serviceLocationDetails, ...connectionDetails };
-  const applicationDto={...customerDetails};
+  const applicantDto={...customerDetails};
+  const applicationDto={...contactPersonDetails};
+
   const fetchCustomerById = async (id) => {
     try {
       const response = await axios.get(`http://localhost:8082/api/applicants/${id}`);
@@ -162,9 +171,9 @@ useEffect(() => {
     // }
 
     const payload = {
-      applicationDto,
+      applicantDto,
       wiringLandDetailDto,
-      contactPersonDetails,
+      applicationDto,
      
     };
 
