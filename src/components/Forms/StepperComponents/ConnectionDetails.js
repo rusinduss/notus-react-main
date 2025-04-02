@@ -9,6 +9,13 @@ const ConnectionDetails = ({ formData, setFormData, handleSubmit }) => {
       sawMills: selectedType === "sawMills" ? 1 : 0,
     });
   };
+  const tariffMapping = {
+    DP: "11",
+    RP: "51",
+    GP: "31",
+    IP: "21",
+    AG: "71",
+  };
 
   return (
     <div className="form-box">
@@ -136,7 +143,14 @@ const ConnectionDetails = ({ formData, setFormData, handleSubmit }) => {
             name="tariffCatCode" 
             className="form-select"
             value={formData.tariffCatCode || "DP"}
-            onChange={(e) => setFormData({ ...formData, tariffCatCode: e.target.value })}
+            onChange={(e) => {
+              const selectedCatCode = e.target.value;
+              setFormData({ 
+                ...formData, 
+                tariffCatCode: selectedCatCode,
+                tariffCode: tariffMapping[selectedCatCode] // Set the corresponding tariffCode
+              });
+            }}
           >
             <option value="DP">Domestic purpose</option>
             <option value="RP">Religious purpose</option>

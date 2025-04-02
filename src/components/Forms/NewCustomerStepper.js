@@ -40,6 +40,7 @@ const NewCustomerStepper = () => {
     contactTelephone: "",
     contactMobile: "",
     contactEmail: "",
+    deptId:""
   });
 
   // Service Location Details state
@@ -52,6 +53,7 @@ const NewCustomerStepper = () => {
     assestmentNo: "",
     neigboursAccNo: "",
     ownership: "",
+    customerType:"DOME"
   });
 
   // Connection Details state
@@ -66,6 +68,14 @@ const NewCustomerStepper = () => {
     tariffCode:"",
     customerType:""
   });
+  
+// Sync deptId whenever serviceLocationDetails.deptId changes
+useEffect(() => {
+  setContactPersonDetails((prevDetails) => ({
+    ...prevDetails,
+    deptId: serviceLocationDetails.deptId, // Update deptId dynamically
+  }));
+}, [serviceLocationDetails.deptId]);
 
   // Generic handlers for form state updates
   const handleCustomerDetailsChange = (e) => {
