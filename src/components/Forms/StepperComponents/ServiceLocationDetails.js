@@ -74,6 +74,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             value={formData.area}
             onChange={handleChange}
             disabled={loadingAreas}
+            required
           >
             <option value="">Select Area</option>
             {areas.map((area) => (
@@ -98,6 +99,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             value={formData.deptId || ""}
             onChange={handleChange}
             disabled={loadingCscs || !formData.area}
+            required
           >
             <option value="">Select CSC</option>
             {cscs.map((csc) => (
@@ -123,6 +125,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             className="form-input"
             value={formData.serviceSuburb}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -137,11 +140,11 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             className="form-input"
             value={formData.serviceStreetAddress}
             onChange={handleChange}
+            required
           />
         </div>
       </div>
 
-      {/* City and Postal Code inputs */}
       <div className="form-group">
         <label className="form-label required" htmlFor="scity">
           City:
@@ -156,7 +159,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
         />
       </div>
       <div className="form-group">
-        <label className="form-label required" htmlFor="spostalcode">
+        <label className="form-label" htmlFor="spostalcode">
           Postal Code:
         </label>
         <input
