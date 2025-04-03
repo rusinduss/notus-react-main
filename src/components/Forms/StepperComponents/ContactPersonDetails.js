@@ -70,6 +70,7 @@ const ContactPersonDetails = ({ formData, setFormData, handleChange, customerDat
           <input
             type="checkbox"
             className="checkbox-input"
+            style={{paddingLeft:"5px"}}
             checked={isSelected}
             onChange={handleselect}
           />

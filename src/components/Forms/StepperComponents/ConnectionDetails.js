@@ -9,6 +9,7 @@ const ConnectionDetails = ({ formData, setFormData, handleSubmit }) => {
       sawMills: selectedType === "sawMills" ? 1 : 0,
     });
   };
+
   const tariffMapping = {
     DP: "11",
     RP: "51",
@@ -18,110 +19,126 @@ const ConnectionDetails = ({ formData, setFormData, handleSubmit }) => {
   };
 
   return (
-    <div className="form-box">
-      <div className="form-row">
-        <label className="form-label" htmlFor="disturbance"><b>Loads Creating Disturbance:</b></label>
+    <div className="form-row">
+      <div className="form-group">
+        <label className="form-label required"><b>Loads Creating Disturbance:</b></label>
         <div className="radio-group">
-          <input 
-            type="radio" 
-            id="none" 
-            name="disturbance" 
-            value="None" 
-            className="radio-input"
-            checked={formData.weldingPlant === 0 && formData.metalCrusher === 0 && formData.sawMills === 0}
-            onChange={() => handleDisturbanceChange("none")}
-          />
-          <label htmlFor="none" className="radio-label">None</label>&nbsp;
-      
-          <input 
-            type="radio" 
-            id="weldingPlant" 
-            name="disturbance" 
-            value="weldingPlant"
-            className="radio-input"
-            checked={formData.weldingPlant === 1}
-            onChange={() => handleDisturbanceChange("weldingPlant")}
-          />
-          <label htmlFor="weldingPlant" className="radio-label">Welding Plant</label>
-         
-          <input 
-            type="radio" 
-            id="metalCrusher" 
-            name="disturbance" 
-            value="metalCrusher" 
-            className="radio-input"
-            checked={formData.metalCrusher === 1}
-            onChange={() => handleDisturbanceChange("metalCrusher")}
-          />
-          <label htmlFor="metalCrusher" className="radio-label">Metal Crusher</label>
-         
-          <input 
-            type="radio" 
-            id="sawMills" 
-            name="disturbance" 
-            value="sawMills"
-            className="radio-input"
-            checked={formData.sawMills === 1}
-            onChange={() => handleDisturbanceChange("sawMills")}
-          />
-          <label htmlFor="sawMills" className="radio-label">Saw Mill</label>
+          <div className="radio-option">
+            <input 
+              type="radio" 
+              id="none" 
+              name="disturbance" 
+              className="radio-input"
+              checked={formData.weldingPlant === 0 && formData.metalCrusher === 0 && formData.sawMills === 0}
+              onChange={() => handleDisturbanceChange("none")}
+            />
+            <label htmlFor="none" className="radio-label">None</label>
+          </div>
+          
+          <div className="radio-option">
+            <input 
+              type="radio" 
+              id="weldingPlant" 
+              name="disturbance" 
+              className="radio-input"
+              checked={formData.weldingPlant === 1}
+              onChange={() => handleDisturbanceChange("weldingPlant")}
+            />
+            <label htmlFor="weldingPlant" className="radio-label">Welding Plant</label>
+          </div>
+          
+          <div className="radio-option">
+            <input 
+              type="radio" 
+              id="metalCrusher" 
+              name="disturbance" 
+              className="radio-input"
+              checked={formData.metalCrusher === 1}
+              onChange={() => handleDisturbanceChange("metalCrusher")}
+            />
+            <label htmlFor="metalCrusher" className="radio-label">Metal Crusher</label>
+          </div>
+          
+          <div className="radio-option">
+            <input 
+              type="radio" 
+              id="sawMills" 
+              name="disturbance" 
+              className="radio-input"
+              checked={formData.sawMills === 1}
+              onChange={() => handleDisturbanceChange("sawMills")}
+            />
+            <label htmlFor="sawMills" className="radio-label">Saw Mill</label>
+          </div>
         </div>
       </div>
       
       <div className="form-box-inner">
-        <label className="form-label" htmlFor="phase"><b>Phase:</b></label>&nbsp;
-        <div className="radio-group">
-          <input 
-            type="radio" 
-            id="1ph" 
-            name="phase" 
-            value="1" 
-            className="radio-input"
-            checked={formData.phase === "1"}
-            onChange={(e) => setFormData({ ...formData, phase: e.target.value })}
-          />
-          <label htmlFor="1ph" className="radio-label">1ph</label>&nbsp;
-          <input 
-            type="radio" 
-            id="3ph" 
-            name="phase" 
-            value="3" 
-            className="radio-input"
-            checked={formData.phase === "3"}
-            onChange={(e) => setFormData({ ...formData, phase: e.target.value })}
-          />
-          <label htmlFor="3ph" className="radio-label">3ph</label>&nbsp;
+        <div className="form-group">
+          <label className="form-label required"><b>Phase:</b></label>
+          <div className="radio-group">
+            <div className="radio-option">
+              <input 
+                type="radio" 
+                id="1ph" 
+                name="phase" 
+                value="1" 
+                className="radio-input"
+                checked={formData.phase === "1"}
+                onChange={(e) => setFormData({ ...formData, phase: e.target.value })}
+              />
+              <label htmlFor="1ph" className="radio-label">1ph</label>
+            </div>
+            <div className="radio-option">
+              <input 
+                type="radio" 
+                id="3ph" 
+                name="phase" 
+                value="3" 
+                className="radio-input"
+                checked={formData.phase === "3"}
+                onChange={(e) => setFormData({ ...formData, phase: e.target.value })}
+              />
+              <label htmlFor="3ph" className="radio-label">3ph</label>
+            </div>
+          </div>
         </div>
         
-        <label className="form-label" htmlFor="connectionType"><b>Connection Type:</b></label>&nbsp;&nbsp;
-        <div className="radio-group">
-          <input 
-            type="radio" 
-            id="30" 
-            name="connectionType" 
-            value="30" 
-            className="radio-input"
-            checked={formData.connectionType === "30"}
-            onChange={(e) => setFormData({ ...formData, connectionType: e.target.value })}
-          />
-          <label htmlFor="30" className="radio-label">30A</label>
-         
-          <input 
-            type="radio" 
-            id="60" 
-            name="connectionType" 
-            value="60" 
-            className="radio-input"
-            checked={formData.connectionType === "60"}
-            onChange={(e) => setFormData({ ...formData, connectionType: e.target.value })}
-          />
-          <label htmlFor="60" className="radio-label">60A</label>
+        <div className="form-group">
+          <label className="form-label required"><b>Connection Type:</b></label>
+          <div className="radio-group">
+            <div className="radio-option">
+              <input 
+                type="radio" 
+                id="30" 
+                name="connectionType" 
+                value="30" 
+                className="radio-input"
+                checked={formData.connectionType === "30"}
+                onChange={(e) => setFormData({ ...formData, connectionType: e.target.value })}
+              />
+              <label htmlFor="30" className="radio-label">30A</label>
+            </div>
+            <div className="radio-option">
+              <input 
+                type="radio" 
+                id="60" 
+                name="connectionType" 
+                value="60" 
+                className="radio-input"
+                checked={formData.connectionType === "60"}
+                onChange={(e) => setFormData({ ...formData, connectionType: e.target.value })}
+              />
+              <label htmlFor="60" className="radio-label">60A</label>
+            </div>
+          </div>
         </div>
-      </div> 
+      </div>
       
+      {/* Rest of your component remains the same */}
       <div className="form-box-inner">
         <div className="form-group">
-          <label className="form-label">Customer Category</label>
+          <label className="form-label required">Customer Category</label>
           <select 
             id="customerCategory" 
             name="customerCategory" 
@@ -137,7 +154,7 @@ const ConnectionDetails = ({ formData, setFormData, handleSubmit }) => {
         </div>
     
         <div className="form-group">
-          <label className="form-label">Tariff Category Code</label>
+          <label className="form-label required">Tariff Category Code</label>
           <select 
             id="tariffCatCode" 
             name="tariffCatCode" 
@@ -148,7 +165,7 @@ const ConnectionDetails = ({ formData, setFormData, handleSubmit }) => {
               setFormData({ 
                 ...formData, 
                 tariffCatCode: selectedCatCode,
-                tariffCode: tariffMapping[selectedCatCode] // Set the corresponding tariffCode
+                tariffCode: tariffMapping[selectedCatCode]
               });
             }}
           >

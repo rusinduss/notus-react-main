@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
-const CustomerDetails = ({ formData, setFormData, handleChange}) => {
-  
+const CustomerDetails = ({ formData, setFormData, handleChange }) => {
   const [customerExists, setCustomerExists] = useState(false);
- 
- // Function for automatically selecting the radio of idtype
-  const handleSelectIdType=(e)=> {
+
+  // Function for automatically selecting the radio of idtype
+  const handleSelectIdType = (e) => {
     const selectValue = e.target.value;
-    setFormData((prevdetails)=>({
+    setFormData((prevdetails) => ({
       ...prevdetails,
-      personalCorporate:selectValue,
-      idType: selectValue==="PER" ?"NIC" :"BusRegNo",
+      personalCorporate: selectValue,
+      idType: selectValue === "PER" ? "NIC" : "BusRegNo",
     }));
     if (selectValue === "PER") {
       document.getElementById("NIC").checked = true;
@@ -23,56 +22,51 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
       document.getElementById("NIC").checked = false;
       document.getElementById("BusRegNo").checked = false;
     }
-  }
+  };
 
-   const handlefind=async()=>{
-        try{
-          const response = await axios.get(`http://localhost:8082/api/applicants/${formData.idNo}`);
-            if(response.data){
-              setCustomerExists(true);
-              setFormData((prev) => ({
-                ...prev,
-                idNo: prev.idNo||response.data.idNo,  // Ensure ID is always retained
-                idType:prev.idType||response.data.idType,
-                personalCorporate:response.data.personalCorporate || prev.personalCorporate,
-                fullName: response.data.fullName || prev.fullName,
-                firstName: response.data.firstName || prev.firstName,
-                lastName: response.data.lastName || prev.lastName,
-                streetAddress: response.data.streetAddress || prev.streetAddress,
-                city: response.data.city || prev.city,
-                postalCode: response.data.postalCode || prev.postalCode,
-                telephoneNo: response.data.telephoneNo || prev.telephoneNo,
-                mobileNo: response.data.mobileNo || prev.mobileNo,
-                email: response.data.email || prev.email,
-              }));
-            }
-            else{
-              setCustomerExists(false);
-            }
-        }
-        catch(error){
-                console.error("error fetcing data",error);
-                setCustomerExists(false);
-        }
-   };
-    
-   
-  
+  const handlefind = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8082/api/applicants/${formData.idNo}`
+      );
+      if (response.data) {
+        setCustomerExists(true);
+        setFormData((prev) => ({
+          ...prev,
+          idNo: prev.idNo || response.data.idNo, // Ensure ID is always retained
+          idType: prev.idType || response.data.idType,
+          personalCorporate:
+            response.data.personalCorporate || prev.personalCorporate,
+          fullName: response.data.fullName || prev.fullName,
+          firstName: response.data.firstName || prev.firstName,
+          lastName: response.data.lastName || prev.lastName,
+          streetAddress: response.data.streetAddress || prev.streetAddress,
+          city: response.data.city || prev.city,
+          postalCode: response.data.postalCode || prev.postalCode,
+          telephoneNo: response.data.telephoneNo || prev.telephoneNo,
+          mobileNo: response.data.mobileNo || prev.mobileNo,
+          email: response.data.email || prev.email,
+        }));
+      } else {
+        setCustomerExists(false);
+      }
+    } catch (error) {
+      console.error("error fetcing data", error);
+      setCustomerExists(false);
+    }
+  };
 
   return (
     <div className="dashboard-card">
       <div className="form-box">
-        <div className="form-box-inner">
-         
-            
-          </div>
+        <div className="form-row">
           <div className="form-group">
             <label className="form-label">Personal/Corporate</label>
             <select
               id="type"
               name="personalCorporate"
               className="form-select"
-              onChange={handleSelectIdType }
+              onChange={handleSelectIdType}
               value={formData.personalCorporate}
               disabled={customerExists}
             >
@@ -80,64 +74,81 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
               <option value="COR">Corporate</option>
             </select>
           </div>
-        
+        </div>
 
-        <div className="form-row">
-          <label className="form-label" htmlFor="IdType">
-            ID Type:
-          </label>
-          <div className="radio-group">
-            <label className="radio-option">
-              <input
-                type="radio"
-                id="NIC"
-                name="idType"
-                value="NIC"
-                className="radio-input"
-                checked={formData.idType === "NIC"}
-                onChange={(e)=> setFormData((prev)=>({...prev,idType: e.target.value}))}
-                disabled={customerExists}
-              />
-              <span>NIC</span>
-            </label>
+        <div className="form-box-inner">
+          <div className="form-group">
+            <div className="form-group-inline">
+              <div className="form-row">
+                <label className="form-label required" htmlFor="IdType">
+                  ID Type:
+                </label>
+                <div className="radio-group">
+                  <label className="radio-option">
+                    <input
+                      type="radio"
+                      id="NIC"
+                      name="idType"
+                      value="NIC"
+                      className="radio-input"
+                      checked={formData.idType === "NIC"}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          idType: e.target.value,
+                        }))
+                      }
+                      disabled={customerExists}
+                    />
+                    <span>NIC</span>
+                  </label>
 
-            <label className="radio-option">
+                  <label className="radio-option">
+                    <input
+                      type="radio"
+                      id="BusRegNo"
+                      name="idType"
+                      value="BusRegNo"
+                      className="radio-input"
+                      checked={formData.idType === "BusRegNo"}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          idType: e.target.value,
+                        }))
+                      }
+                      disabled={customerExists}
+                    />
+                    <span>Business Reg No</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="form-group-inline">
+              <label className="form-idlabel required" htmlFor="id">
+                ID:
+              </label>
               <input
-                type="radio"
-                id="BusRegNo"
-                name="idType"
-                value="BusRegNo"
-                className="radio-input"
-                checked={formData.idType === "BusRegNo"}
-                onChange={(e)=> setFormData((prev)=>({...prev,idType: e.target.value}))}
-                disabled={customerExists}
+                type="text"
+                id="idNo"
+                name="idNo"
+                className="form-input"
+                required
+                value={formData.idNo}
+                onChange={handleChange}
               />
-              <span>Business Reg No</span>
-            </label>
+            </div>
+
+            <div className="form-group-inline">
+              <button value="find" onClick={handlefind} className="find-button">
+                Find
+              </button>
+            </div>
           </div>
         </div>
-        <div className="form-box-inner">
-        <div className="form-group">
-            <label className="form-label required" htmlFor="id">
-              ID:
-            </label>
-            <input
-              type="text"
-              id="idNo"
-              name="idNo"
-              className="form-input"
-              required
-              value={formData.idNo}
-              onChange={handleChange}
-            />
-             </div>
-            <div className="form-group">
-            <button value="find" onClick={handlefind} className="bg-lightBlue-500 mt-6 mb-0 ml-2 text-white font-bold uppercase text-xs px-6 py-3 rounded shadow hover:shadow-md transition duration-150">
-              Find
-            </button>
-            </div>
-            </div>
-          
+
         <div className="form-group">
           <label className="form-label required" htmlFor="fullName">
             Full Name:
@@ -202,6 +213,7 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
               value={formData.streetAddress}
               onChange={handleChange}
               readOnly={customerExists}
+              required
             />
           </div>
           <div className="form-group">
@@ -216,10 +228,11 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
               value={formData.suburb}
               onChange={handleChange}
               readOnly={customerExists}
+              required
             />
           </div>
-          </div>
-          <div className="form-box-inner">
+        </div>
+        <div className="form-box-inner">
           <div className="form-group">
             <label className="form-label required" htmlFor="city">
               City:
@@ -232,6 +245,7 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
               value={formData.city}
               onChange={handleChange}
               readOnly={customerExists}
+              required
             />
           </div>
           <div className="form-group">
@@ -291,7 +305,7 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
               type="email"
               id="email"
               name="email"
-              className="form-input"
+              className="form-input-email"
               value={formData.email}
               onChange={handleChange}
             />
@@ -314,7 +328,12 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
                 value="SI"
                 className="radio-input"
                 checked={formData.preferredLanguage === "SI"}
-                onChange={(e)=> setFormData((prev)=>({...prev,preferredLanguage: e.target.value}))}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    preferredLanguage: e.target.value,
+                  }))
+                }
                 // disabled={customerExists}
               />
               <span>Sinhala</span>
@@ -327,7 +346,12 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
                 value="tamil"
                 className="radio-input"
                 checked={formData.preferredLanguage === "tamil"}
-                onChange={(e)=> setFormData((prev)=>({...prev,preferredLanguage: e.target.value}))}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    preferredLanguage: e.target.value,
+                  }))
+                }
                 // disabled={customerExists}
               />
               <span>Tamil</span>
@@ -340,7 +364,12 @@ const CustomerDetails = ({ formData, setFormData, handleChange}) => {
                 value="english"
                 className="radio-input"
                 checked={formData.preferredLanguage === "english"}
-                onChange={(e)=> setFormData((prev)=>({...prev,preferredLanguage: e.target.value}))}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    preferredLanguage: e.target.value,
+                  }))
+                }
                 // disabled={customerExists}
               />
               <span>English</span>
