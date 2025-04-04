@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 
 const ConnectionDetails = ({ formData, setFormData, handleSubmit }) => {
   const handleDisturbanceChange = (selectedType) => {
@@ -17,6 +17,21 @@ const ConnectionDetails = ({ formData, setFormData, handleSubmit }) => {
     IP: "21",
     AG: "71",
   };
+
+  useEffect(() => {
+    if (!formData.tariffCatCode) {
+      setFormData(prev => ({
+        ...prev,
+        tariffCatCode: "DP",
+        tariffCode:"11",
+        tariffCode: tariffMapping["DP"],
+        customerCategory: prev.customerCategory || "PRIV",
+        weldingPlant: prev.weldingPlant || 0,
+        metalCrusher: prev.metalCrusher || 0,
+        sawMills: prev.sawMills || 0
+      }));
+    }
+  }, [formData.tariffCatCode, setFormData]);
 
   return (
     <div className="form-row">
