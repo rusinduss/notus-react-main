@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import "./NewCustomerForm.css";
 import ceb from "../../assets/img/ceb.png"
 import axios from 'axios';
@@ -12,6 +13,7 @@ const NewCustomerStepper = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [completedTabs, setCompletedTabs] = useState(Array(4).fill(false));
   const [customerExists, setCustomerExists] = useState(false);
+  const history = useHistory();
 
 
   // Customer Details state
@@ -194,6 +196,13 @@ useEffect(() => {
       if (response.ok) {
         console.log("Success Response:", responseData);
         alert("Application submitted successfully!");
+        history.push({
+          pathname: "/form/success",
+          state: { 
+            // applicationId: responseData.id, 
+            customerName: customerDetails.fullName 
+          }
+        });
       } else {
         console.error("Failed Response:", responseData);
         alert(`Failed to submit application: ${responseData?.message || "Unknown error"}`);
@@ -203,6 +212,7 @@ useEffect(() => {
       alert("Error submitting application. Check the console for details.");
     }
   }    
+
 
   const tabs = [
     {

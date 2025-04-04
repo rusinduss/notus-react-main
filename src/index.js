@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/styles/tailwind.css";
 import Form from "./components/Forms/NewCustomerStepper.js";
+import SuccessPage from "./components/Forms/SucessPage.js";
 import Admin from "layouts/Admin.js";
 import Auth from "layouts/Auth.js";
 import Login from "views/auth/Login.js";
@@ -55,6 +56,7 @@ const App = () => {
   return (
     <Switch>
       <Route path="/form" component={Form}/>
+      <Route path="/form/success" component={SuccessPage } />
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
       <Route path="/landing" exact component={Landing} />
