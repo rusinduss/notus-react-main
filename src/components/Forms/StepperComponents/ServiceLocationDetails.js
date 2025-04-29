@@ -198,6 +198,7 @@ const ServiceLocationDetails = ({ formData, handleChange }) => {
             className="form-input"
             value={formData.neigboursAccNo}
             onChange={handleChange}
+            maxLength={10}
           />
         </div>
       </div>

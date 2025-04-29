@@ -30,7 +30,7 @@ const NewCustomerStepper = () => {
     telephoneNo: "",
     mobileNo: "",
     email: "",
-    preferredLanguage: "",
+    preferredLanguage: "english",
   });
 
   // Contact Person Details state
@@ -53,21 +53,21 @@ const NewCustomerStepper = () => {
     servicePostalCode: "",
     assestmentNo: "",
     neigboursAccNo: "",
-    ownership: "",
-    customerType: "DOME",
+    ownership: "Occupy",
+    customerType:"DOME"
   });
 
   // Connection Details state
   const [connectionDetails, setConnectionDetails] = useState({
     phase: "",
     connectionType: "",
-    customerCategory: "PRIV",
-    tariffCatCode: "DP",
+    customerCategory: "",
+    tariffCatCode: "",
     metalCrusher: "",
-    sawMills: "",
-    weldingPlant: "",
-    tariffCode: "",
-    customerType: "DOME",
+    sawMills:"",
+    weldingPlant:"",
+    tariffCode:"",
+    customerType:""
   });
 
   // Sync deptId whenever serviceLocationDetails.deptId changes
@@ -218,7 +218,7 @@ const NewCustomerStepper = () => {
         console.log("Success Response:", responseData);
         alert("Application submitted successfully!");
         history.push({
-          pathname: "/form/success",
+          pathname: ("/success"),
           state: { 
             // applicationId: responseData.id, 
             customerName: customerDetails.fullName 

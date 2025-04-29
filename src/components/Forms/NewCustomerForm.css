@@ -182,8 +182,6 @@
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .form-box-inner {
@@ -241,10 +239,10 @@
   padding: 2px;
 }
 
-.form-input, 
-.form-select {
-  flex: 1; /* Take remaining space */
-  padding: 8px 12px;
+.form-input, .form-select {
+  width: 100%;
+  padding: 4px 6px;
+  margin: 0;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
   font-size: 14px;
@@ -281,9 +279,10 @@
 .form-row-button {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
-  margin: 15px 0;
-  width: 100%;
+  margin-right:0%;
+  margin-left: 10px;
+  align-items:flex-end;
+  margin-bottom: 10px;
 }
 .form-label.required::after {
   content: "*";
@@ -344,15 +343,23 @@
   }
   
   .radio-group {
+    display: flex;
     flex-direction: column;
     gap: 8px;
   }
-  
+  .radio-input{
+    margin: 0;
+    transform: scale(1.1);
+  }
   .form-container .w-10 {
     width: 30px;
     height: 30px;
   }
-  
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Ensures spacing between radio button and label */
+  }
   .dashboard-header {
     flex-direction: column;
     text-align: center;

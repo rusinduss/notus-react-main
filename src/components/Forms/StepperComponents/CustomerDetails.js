@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
 const CustomerDetails = ({ formData, setFormData, handleChange }) => {
   const [customerExists, setCustomerExists] = useState(false);
-
+  // const[validation,setValidation]=useState("");
   // Function for automatically selecting the radio of idtype
   const handleSelectIdType = (e) => {
     const selectValue = e.target.value;
@@ -277,7 +279,8 @@ const CustomerDetails = ({ formData, setFormData, handleChange }) => {
               placeholder="0xxxxxxxx"
               value={formData.telephoneNo}
               onChange={handleChange}
-              // readOnly={customerExists}
+              maxLength={10}
+             
             />
           </div>
           <div className="form-group">
@@ -285,17 +288,17 @@ const CustomerDetails = ({ formData, setFormData, handleChange }) => {
               Mobile No:
             </label>
             <input
-              type="tel"
-              id="mobileNo"
-              name="mobileNo"
-              className="form-input"
-              placeholder="07xxxxxxxx"
-              pattern="07[0-9]{8}"
-              title="Phone number must start with 07 and be 10 digits total"
-              required
-              value={formData.mobileNo}
-              onChange={handleChange}
-            />
+  type="tel"
+  id="mobileNo"
+  name="mobileNo"
+  className="form-input"
+  placeholder="07xxxxxxxx"
+  maxLength={10}
+  required
+  value={formData.mobileNo}
+  onChange={handleChange}
+/>
+
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="email">
@@ -354,7 +357,7 @@ const CustomerDetails = ({ formData, setFormData, handleChange }) => {
                 }
                 // disabled={customerExists}
               />
-              <span>Tamil</span>
+              <span>Tamil&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </label>
 
             <label className="radio-option">

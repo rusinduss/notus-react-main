@@ -56,7 +56,7 @@ const App = () => {
   return (
     <Switch>
       <Route path="/form" component={Form}/>
-      <Route path="/form/success" component={SuccessPage } />
+      <Route path="/success" component={SuccessPage} />
       <Route path="/admin" component={Admin} />
       <Route path="/auth" component={Auth} />
       <Route path="/landing" exact component={Landing} />
